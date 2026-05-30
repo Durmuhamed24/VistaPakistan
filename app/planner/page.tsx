@@ -241,6 +241,10 @@ export default function Planner() {
 function buildItinerary(destId: string, days: number, budget: string, style: string): ItineraryDay[] {
   const result: ItineraryDay[] = [];
   
+  // Find the destination object for reference
+  const destination = DESTINATIONS.find((d) => d.id === destId);
+  const destName = destination?.title || destId;
+  
   const budgetMultiplier = budget === "Luxury" ? "Premium boutique resorts & upscale private dinners" : budget === "Budget" ? "Local family guesthouses & backpacking hostels" : "Cozy middle-range hotel rooms & standard sightseeing";
   
   if (destId === "hunza-valley") {
@@ -382,10 +386,10 @@ function buildItinerary(destId: string, days: number, budget: string, style: str
     for (let i = 1; i <= days; i++) {
       result.push({
         day: i,
-        title: `Explore ${selectedDestinationObj?.title} - Day ${i}`,
-        location: selectedDestinationObj?.title || "City Center",
+        title: `Explore ${destName} - Day ${i}`,
+        location: destName || "City Center",
         coordinate: "33.6844, 73.0479",
-        activity: `Enjoy your custom ${style.toLowerCase()} travel day in ${selectedDestinationObj?.title}. We've coordinated ${budgetMultiplier} to provide maximum comfort. Visit local cultural landmarks, dine on authentic dishes, and catalog spectacular vistas.`,
+        activity: `Enjoy your custom ${style.toLowerCase()} travel day in ${destName}. We've coordinated ${budgetMultiplier} to provide maximum comfort. Visit local cultural landmarks, dine on authentic dishes, and catalog spectacular vistas.`,
         tip: "Interact with local tour guides to find the hidden scenic spots."
       });
     }
